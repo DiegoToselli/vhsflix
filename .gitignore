@@ -1,3 +1,7 @@
+
+# Ignorar la clase conexion
+/src/main/java/data/Conexion.java
+
 # NetBeans
 /nbproject/private/
 /nbbuild/

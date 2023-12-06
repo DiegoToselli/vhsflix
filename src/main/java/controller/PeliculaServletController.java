@@ -21,11 +21,13 @@ public class PeliculaServletController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         String route = req.getParameter("action");
-
+           
         switch (route) {
             case "listAll" -> {
                 res.setContentType("application/json; charset=UTF-8");
                 listaPeliculas = PeliculaDAO.recuperarPeliculas();
+
+                System.out.println("Cantidad de peliculas" + listaPeliculas.size());
 
                 for (Pelicula pelicula : listaPeliculas) {
                     byte[] imagenBytes = pelicula.getImagen();
