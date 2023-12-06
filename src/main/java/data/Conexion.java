@@ -10,8 +10,8 @@ import org.apache.commons.dbcp2.BasicDataSource;
 public class Conexion {
 
     private static String user = "root";
-    private static String pass = "admin";
-    private static String url = "jdbc:mysql://localhost:3306/vhsflix?useSSL=false&useTimeZone=true&serverTimeZone=UTC&allowPublicKeyRetrieval=true";
+    private static String pass = "root";
+    private static String url = "jdbc:mysql://localhost:3310/vhsflix?useSSL=false&useTimeZone=true&serverTimeZone=UTC&allowPublicKeyRetrieval=true";
 
     public static DataSource getDataSource() {
         BasicDataSource ds = new BasicDataSource();

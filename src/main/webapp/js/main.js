@@ -23,6 +23,37 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
     }
     
+    function filterPeliculas(palabra){
+        const peliculasFiltradas = peliculas.filter(pelicula => {
+            return pelicula.nombre.toLowerCase().includes(palabra.toLowerCase());
+        })
+        
+        cardsPeliculas.innerHTML = "";
+        
+        peliculasFiltradas.forEach(pelicula => {
+            const card = document.createElement("div");
+            card.className = "col-md-3 mb-4 ident";
+            card.setAttribute("data-pelicula-id", pelicula.idPelicula);
+            card.innerHTML = `
+                <div class="card h-100 animate-hover-card">
+                    <img src="data:image/jpeg;base64, ${pelicula.imagenBase64}" class="card-img-top h-75" alt="Imagen de portada">
+                    <div class="card-body">
+                        <h5 class="card-title">${pelicula.nombre}</h5>
+                        <p class="card-text">${pelicula.descripcion}</p>
+                    </div>
+                </div>
+            `;
+            cardsPeliculas.appendChild(card);
+        });
+    }
+    
+    const searchForm = document.querySelector("form[role='search']")
+    searchForm.addEventListener("submit", function(e){
+       e.preventDefault();
+       const searchTerm = searchForm.querySelector("input[type='search']").value;
+       filterPeliculas(searchTerm);
+    });
+    
     cargarListaPeliculas();
     
 })
