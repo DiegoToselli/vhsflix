@@ -54,6 +54,44 @@ public class PeliculaDAO {
         return listaPeliculas;
     }
 
+    public static int insertar(Pelicula pelicula) {
+        String query = "INSERT INTO Peliculas (nombre, anioLanzamiento, duracion, genero, director, reparto, descripcion, urlThriller, portada, activa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        Connection con = null;
+        PreparedStatement stmt = null;
+        int records = 0;
+
+        try {
+            con = Conexion.getConexion();
+            stmt = con.prepareStatement(query);
+
+            stmt.setString(1, pelicula.getNombre());
+            stmt.setInt(2, pelicula.getAnioLanzamiento());
+            stmt.setString(3, pelicula.getDuracion());
+            stmt.setString(4, pelicula.getGenero());
+            stmt.setString(5, pelicula.getDirector());
+            stmt.setString(6, pelicula.getReparto());
+            stmt.setString(7, pelicula.getDescripcion());
+            stmt.setString(8, pelicula.getUrlThriller());
+
+            Blob blobImage = con.createBlob();
+            blobImage.setBytes(1, pelicula.getImagen());
+            stmt.setBlob(9, blobImage);
+
+            stmt.setBoolean(10, true);
+
+            records = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(con);
+        }
+        return records;
+
+    }
+
     public void insertarPelicula(Pelicula pelicula) {
         String query = "INSERT INTO peliculas (nombre,anioLanzamiento,duracion,genero,director,reparto,descripcion,urlThriller,portada,activa) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)";
         Connection con = null;
