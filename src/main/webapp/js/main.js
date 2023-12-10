@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
     }
     
+   
     function filterPeliculas(palabra){
         const peliculasFiltradas = peliculas.filter(pelicula => {
             return pelicula.nombre.toLowerCase().includes(palabra.toLowerCase());
@@ -54,6 +55,29 @@ document.addEventListener("DOMContentLoaded", function () {
        filterPeliculas(searchTerm);
     });
     
+    
+    cardsPeliculas.addEventListener("click", function(e){
+         const clickedCard = e.target.closest(".ident");
+         if(!clickedCard){
+            return;
+        }  
+        
+        const idPelicula = clickedCard.dataset.idPelicula;
+        
+        fetch (`/app/peliculas?action=getDetails&id=${idPelicula}`)
+                .then(response => response.json())
+                .then(peliculaDetails =>{
+                    const queryParams = new URLSearchParams({
+                       id : peliculaDetails.idPelicula 
+                    });
+                    
+                    window.location.href = `/app/pages/PeliculasDetalles.html?${queryParams.toString()}`;
+                })
+                .catch(error => console.error("Error en la solicitud GET:", error));
+    });
+            
+    
+    
     cargarListaPeliculas();
     
-})
+ });    

@@ -46,6 +46,8 @@ public class PeliculaServletController extends HttpServlet {
                 }
                 mapper.writeValue(res.getWriter(), listaPeliculas);
             }
+            
+          
             default ->
                 System.out.println("Parametro Invalido");
         }

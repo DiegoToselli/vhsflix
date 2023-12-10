@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Pelicula;
 
+
 public class PeliculaDAO {
 
     public static List<Pelicula> recuperarPeliculas() {
@@ -130,5 +131,7 @@ public class PeliculaDAO {
         }
 
     }
-
+    
+//    private static final String SQL_DELETE = "DELETE FROM Peliculas WHERE idPelicula = ?"; 
+   
 }
