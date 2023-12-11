@@ -22,15 +22,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                 })
     }
-    
-   
-    function filterPeliculas(palabra){
+
+
+    function filterPeliculas(palabra) {
         const peliculasFiltradas = peliculas.filter(pelicula => {
             return pelicula.nombre.toLowerCase().includes(palabra.toLowerCase());
         })
-        
+
         cardsPeliculas.innerHTML = "";
-        
+
         peliculasFiltradas.forEach(pelicula => {
             const card = document.createElement("div");
             card.className = "col-md-3 mb-4 ident";
@@ -47,37 +47,36 @@ document.addEventListener("DOMContentLoaded", function () {
             cardsPeliculas.appendChild(card);
         });
     }
-    
+
     const searchForm = document.querySelector("form[role='search']")
-    searchForm.addEventListener("submit", function(e){
-       e.preventDefault();
-       const searchTerm = searchForm.querySelector("input[type='search']").value;
-       filterPeliculas(searchTerm);
+    searchForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const searchTerm = searchForm.querySelector("input[type='search']").value;
+        filterPeliculas(searchTerm);
     });
-    
-    
-    cardsPeliculas.addEventListener("click", function(e){
-         const clickedCard = e.target.closest(".ident");
-         if(!clickedCard){
+
+
+    cardsPeliculas.addEventListener("click", function (e) {
+        const clickedCard = e.target.closest(".ident");
+        if (!clickedCard) {
             return;
-        }  
-        
-        const idPelicula = clickedCard.dataset.idPelicula;
-        
-        fetch (`/app/peliculas?action=getDetails&id=${idPelicula}`)
+        }
+
+        const idPelicula = clickedCard.dataset.peliculaId;
+        fetch(`/app/peliculas?action=getDetails&id=${idPelicula}`)
                 .then(response => response.json())
-                .then(peliculaDetails =>{
+                .then(peliculaDetails => {
                     const queryParams = new URLSearchParams({
-                       id : peliculaDetails.idPelicula 
+                        id: peliculaDetails.idPelicula
                     });
-                    
+
                     window.location.href = `/app/pages/PeliculasDetalles.html?${queryParams.toString()}`;
                 })
                 .catch(error => console.error("Error en la solicitud GET:", error));
     });
-            
-    
-    
+
+
+
     cargarListaPeliculas();
-    
- });    
+
+});

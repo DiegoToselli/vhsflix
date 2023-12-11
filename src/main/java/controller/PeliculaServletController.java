@@ -46,8 +46,27 @@ public class PeliculaServletController extends HttpServlet {
                 }
                 mapper.writeValue(res.getWriter(), listaPeliculas);
             }
-            
-          
+
+            case "getDetails" -> {
+                String idPelicula = req.getParameter("id");
+                Pelicula peliculaDetalles = PeliculaDAO.recuperarPeliculaPorId(Integer.parseInt(idPelicula));
+
+                res.setContentType("application/json");
+                mapper.writeValue(res.getWriter(), peliculaDetalles);
+            }
+
+            case "getById" -> {
+                int id = Integer.parseInt(req.getParameter("id"));
+                res.setContentType("application/json; charset=UTF-8");
+
+                Pelicula pelicula = PeliculaDAO.recuperarPeliculaPorId(id);
+                byte[] imagenBytes = pelicula.getImagen();
+                String imagenBase64 = Base64.getEncoder().encodeToString(imagenBytes);
+                pelicula.setImagenBase64(imagenBase64);
+
+                mapper.writeValue(res.getWriter(), pelicula);
+            }
+
             default ->
                 System.out.println("Parametro Invalido");
         }

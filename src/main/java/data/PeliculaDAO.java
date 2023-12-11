@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Pelicula;
 
-
 public class PeliculaDAO {
 
     public static List<Pelicula> recuperarPeliculas() {
@@ -55,6 +54,45 @@ public class PeliculaDAO {
         return listaPeliculas;
     }
 
+    public static Pelicula recuperarPeliculaPorId(int id) {
+        String query = "SELECT * FROM Peliculas WHERE idPelicula = ? AND activa = ?";
+        Connection con = null;
+        PreparedStatement stp = null;
+        ResultSet rs = null;
+        Pelicula pelicula = null;
+
+        try {
+            con = Conexion.getConexion();
+            stp = con.prepareStatement(query);
+            stp.setInt(1, id);
+            stp.setBoolean(2, true);
+            rs = stp.executeQuery();
+            while (rs.next()) {
+                int idPelicula = rs.getInt(1);
+                String nombre = rs.getString("nombre");
+                int anioLanzamiento = rs.getInt("anioLanzamiento");
+                String duracion = rs.getString("duracion");
+                String genero = rs.getString("genero");
+                String director = rs.getString("director");
+                String reparto = rs.getString("reparto");
+                String descripcion = rs.getString("descripcion");
+                String urlThriller = rs.getString("urlThriller");
+
+                Blob blob = rs.getBlob("portada");
+                byte[] imagenBytes = blob.getBytes(1, (int) blob.length());
+
+                pelicula = new Pelicula(idPelicula, nombre, anioLanzamiento, duracion, genero, director, reparto, descripcion, urlThriller, imagenBytes);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(stp);
+            Conexion.close(con);
+        }
+        return pelicula;
+    }
+
     public static int insertar(Pelicula pelicula) {
         String query = "INSERT INTO Peliculas (nombre, anioLanzamiento, duracion, genero, director, reparto, descripcion, urlThriller, portada, activa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection con = null;
@@ -92,46 +130,4 @@ public class PeliculaDAO {
         return records;
 
     }
-
-    public void insertarPelicula(Pelicula pelicula) {
-        String query = "INSERT INTO peliculas (nombre,anioLanzamiento,duracion,genero,director,reparto,descripcion,urlThriller,portada,activa) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)";
-        Connection con = null;
-        PreparedStatement stp = null;
-
-        try {
-            con = Conexion.getConexion();
-            stp = con.prepareStatement(query);
-            stp.setString(1, pelicula.getNombre());
-            stp.setInt(2, pelicula.getAnioLanzamiento());
-            stp.setString(3, pelicula.getDuracion());
-            stp.setString(4, pelicula.getGenero());
-            stp.setString(5, pelicula.getDirector());
-            stp.setString(6, pelicula.getReparto());
-            stp.setString(7, pelicula.getDescripcion());
-            stp.setString(8, pelicula.getUrlThriller());
-            Blob portadaBlob = con.createBlob();
-            portadaBlob.setBytes(1, pelicula.getImagen());
-            stp.setBlob(9, portadaBlob);
-            stp.setBoolean(10, true);
-            int cantidadRegistro = stp.executeUpdate();
-            if (cantidadRegistro > 0) {
-                System.out.println("se insertaron " + cantidadRegistro + " registros");
-            } else {
-                System.out.println("No se logro insertar ningun registro");
-
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            Conexion.close(stp);
-            Conexion.close(con);
-        }
-
-    }
-    
-//    private static final String SQL_DELETE = "DELETE FROM Peliculas WHERE idPelicula = ?"; 
-   
 }
