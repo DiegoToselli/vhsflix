@@ -130,4 +130,28 @@ public class PeliculaDAO {
         return records;
 
     }
+
+    public static int eliminar(int idPelicula) {
+        String query = "UPDATE Peliculas SET activa = ? WHERE idPelicula = ?";
+        Connection con = null;
+        PreparedStatement stmt = null;
+        int registros = 0;
+
+        try {
+            con = Conexion.getConexion();
+            stmt = con.prepareStatement(query);
+            stmt.setInt(1, 0);
+            stmt.setInt(2, idPelicula);
+
+            registros = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(con);
+        }
+        return registros;
+    }
 }

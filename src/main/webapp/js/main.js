@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const idPelicula = clickedCard.dataset.peliculaId;
-        fetch(`/app/peliculas?action=getDetails&id=${idPelicula}`)
+        fetch(`/app/peliculas?action=getDetails&id=${idPelicula}`, )
                 .then(response => response.json())
                 .then(peliculaDetails => {
                     const queryParams = new URLSearchParams({

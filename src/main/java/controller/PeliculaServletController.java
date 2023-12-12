@@ -74,6 +74,7 @@ public class PeliculaServletController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+        req.setCharacterEncoding("UTF-8");
         String route = req.getParameter("action");
 
         switch (route) {
@@ -99,6 +100,26 @@ public class PeliculaServletController extends HttpServlet {
                 response.put("message", "Pelicula guardada con éxito!");
 
                 mapper.writeValue(res.getWriter(), response);
+            }
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        String route = req.getParameter("action");
+
+        switch (route) {
+            case "eliminarPelicula" -> {
+                int idPelicula = Integer.parseInt(req.getParameter("id"));
+                int registroAfectado = PeliculaDAO.eliminar(idPelicula);
+
+                if (registroAfectado == 1) {
+                    res.setContentType("application/json");
+                    Map<String, String> response = new HashMap();
+                    response.put("message", "ok");
+
+                    mapper.writeValue(res.getWriter(), response);
+                }
             }
         }
     }

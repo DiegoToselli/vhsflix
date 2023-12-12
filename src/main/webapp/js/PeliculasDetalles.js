@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
                            <h2 class="card-title">${data.nombre}</h2>
                          </li>
                          <li class="list-group-item">Año de Lanzamiento: ${data.anioLanzamiento} </li>
-                         <li class="list-group-item">Duración: ${data.duracion} </li>
+                         <li class="list-group-item">Duración: ${data.duracion} min</li>
                          <li class="list-group-item">Genero: ${data.genero} </li>
                          <li class="list-group-item">Director: ${data.director} </li>
                          <li class="list-group-item">Reparto: ${data.reparto} </li>
@@ -66,6 +66,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 });
     }
+
+    btnEliminarElement.addEventListener("click", function () {
+        if (!confirm(`¿Está seguro que desea eliminar la pelicula: ${objetoPelicula.nombre}?`)) {
+            return;
+        } else {
+            fetch(`/app/peliculas?action=eliminarPelicula&id=${PeliculaDetallesId.id}`, {
+                method: "DELETE"
+            })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message.toLowerCase() === "ok") {
+                            setTimeout(() => {
+                                window.location.href = "/app/index.html";
+                            }, 2000);
+                        }
+                    })
+        }
+    });
 
 
     loadPelicula();
