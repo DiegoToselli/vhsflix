@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
                          <li class="list-group-item">Director: ${data.director} </li>
                          <li class="list-group-item">Reparto: ${data.reparto} </li>
                          <li class="list-group-item">Descripción: ${data.descripcion} </li>
-                         <li class="list-group-item"><a href="${data.urlThriller}" target="_blank">Ver Thriller</a></li>
+                         <li class="list-group-item text-center"><iframe width="400" height="250" src="${data.urlThriller}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></li>
                        </ul>
                     </div>
                     `;

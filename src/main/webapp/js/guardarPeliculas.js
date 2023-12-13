@@ -51,7 +51,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         urlThrillerElement.value = "";
                         imageElement.value = "";
                         imagenContainer.classList.add("d-none");
+                        window.location.href = "/app/index.html";
                     }, 2000);
+
                 });
     });
 

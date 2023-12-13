@@ -96,6 +96,8 @@ public class PeliculaServletController extends HttpServlet {
                 PeliculaDAO.insertar(pelicula);
 
                 res.setContentType("application/json");
+                res.setCharacterEncoding("UTF-8");
+
                 Map<String, String> response = new HashMap();
                 response.put("message", "Pelicula guardada con éxito!");
 
