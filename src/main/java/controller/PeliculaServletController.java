@@ -101,6 +101,40 @@ public class PeliculaServletController extends HttpServlet {
 
                 mapper.writeValue(res.getWriter(), response);
             }
+            case "update" ->{
+                /*TODO definir metodo */
+                try{
+                int idPelicula=Integer.parseInt(req.getParameter("idPelicula"));
+                String nombre = req.getParameter("nombre");
+                int anioLanzamiento = Integer.parseInt(req.getParameter("anioLanzamiento"));
+                String duracion = req.getParameter("duracion");
+                String genero = req.getParameter("genero");
+                String director = req.getParameter("director");
+                String reparto = req.getParameter("reparto");
+                String descripcion = req.getParameter("descripcion");
+                String urlThriller = req.getParameter("urlThriller");
+                
+                Part filePart = req.getPart("imagen");
+                byte[] imagenBytes = IOUtils.toByteArray(filePart.getInputStream());
+                 Pelicula pelicula = new Pelicula(idPelicula,nombre, anioLanzamiento, duracion, genero, director, reparto, descripcion, urlThriller, imagenBytes);
+                 PeliculaDAO.actualizar(pelicula);
+                 res.setContentType("application/json");
+                 res.setCharacterEncoding("UTF-8");
+                 Map<String,String>response=new HashMap<>();
+                 response.put("Success","true");
+                 mapper.writeValue(res.getWriter(), response);
+                
+                }catch(Exception e){
+                     res.setContentType("application/json");
+                    res.setCharacterEncoding("UTF-8");
+                     Map<String,String>responseFail=new HashMap<>();
+                 responseFail.put("Success","false");
+                 responseFail.put("message",e.getMessage());
+                 mapper.writeValue(res.getWriter(),responseFail);
+                    
+                }
+                
+            }
         }
     }
 

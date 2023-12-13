@@ -154,4 +154,34 @@ public class PeliculaDAO {
         }
         return registros;
     }
+    
+    public static int actualizar(Pelicula pelicula){
+        Connection con = null;
+        PreparedStatement stmt = null;
+        int registros=0;
+        String query="UPDATE peliculas SET nombre=?, anioLanzamiento=?, duracion=?, genero=?, director=?, reparto=?, descripcion=?, urlThriller=?, activa=? WHERE idPelicula=?";
+         
+        try{
+         con = Conexion.getConexion();
+         stmt = con.prepareStatement(query);
+         stmt.setString(1, pelicula.getNombre());
+         stmt.setInt(2, pelicula.getAnioLanzamiento());
+         stmt.setString(3, pelicula.getDuracion());
+         stmt.setString(4, pelicula.getGenero());
+         stmt.setString(5, pelicula.getDirector());
+         stmt.setString(6, pelicula.getReparto());
+         stmt.setString(7, pelicula.getDescripcion());
+         stmt.setString(8, pelicula.getUrlThriller());
+         stmt.setBoolean(9, true);
+         stmt.setInt(10, pelicula.getIdPelicula());
+         registros=stmt.executeUpdate();
+          System.out.println("numero de registros"+registros);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            Conexion.close(con);
+            Conexion.close(stmt);
+        }
+        return registros;
+    }
 }
