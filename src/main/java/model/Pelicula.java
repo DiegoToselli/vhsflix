@@ -48,6 +48,18 @@ public class Pelicula {
         this.imagen = imagen;
     }
 
+    public Pelicula(int idPelicula, String nombre, int anioLanzamiento, String duracion, String genero, String director, String reparto, String descripcion, String urlThriller) {
+        this.idPelicula = idPelicula;
+        this.nombre = nombre;
+        this.anioLanzamiento = anioLanzamiento;
+        this.duracion = duracion;
+        this.genero = genero;
+        this.director = director;
+        this.reparto = reparto;
+        this.descripcion = descripcion;
+        this.urlThriller = urlThriller;
+    }
+
     public Pelicula() {
 
     }

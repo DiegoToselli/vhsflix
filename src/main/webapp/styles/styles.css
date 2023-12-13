@@ -10,3 +10,12 @@
     cursor: pointer;
     transform: scale(1.03);
 }
+
+#descripcion {
+    resize: none;
+    height: 150px;
+}
+
+#descripcion:focus-visible {
+    outline: none;
+}
